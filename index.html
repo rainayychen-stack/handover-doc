@@ -229,6 +229,22 @@ code {
 .img-wrap img { width:100%; display:block; }
 .img-cap { padding:8px 14px; background:var(--surface); font-size:12px; color:var(--t3); font-weight:500; text-align:center; }
 
+/* === Part divider === */
+.part-divider {
+  padding:40px 20px 12px;
+  margin-top:16px;
+}
+.part-divider .part-label {
+  font-size:12px; font-weight:700; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--acc); margin-bottom:4px;
+}
+.part-divider h3 {
+  font-size:22px; font-weight:700; color:var(--t1);
+  letter-spacing:-.01em; margin:0;
+  padding-bottom:14px;
+  border-bottom:2px solid var(--acc);
+}
+
 /* === Print === */
 @media print {
   .doc-nav { display:none; }
@@ -243,18 +259,18 @@ code {
 <!-- Side Navigation -->
 <nav class="doc-nav">
   <div class="doc-nav-title">目录</div>
-  <div class="nav-group">认知</div>
+  <div class="nav-group">总览</div>
   <a href="#overview">产品全景</a>
   <a href="#auth">认证体系</a>
   <a href="#collab">协作部门</a>
-  <div class="nav-group">成果</div>
+  <div class="nav-group">功能</div>
   <a href="#platform">平台专区功能</a>
   <a href="#pergame">单游戏专区功能</a>
-  <div class="nav-group">实操</div>
+  <div class="nav-group">流程</div>
   <a href="#auth-onboard">认证能力接入</a>
   <a href="#template-onboard">通用模板接入</a>
   <a href="#custom-onboard">定制专区接入</a>
-  <div class="nav-group">收尾</div>
+  <div class="nav-group">附录</div>
   <a href="#resources">资源清单</a>
   <a href="#faq">FAQ & 待办</a>
 </nav>
@@ -269,6 +285,12 @@ code {
 </div>
 
 <div class="doc-container">
+
+<!-- ===== PART 1 · 总览 ===== -->
+<div class="part-divider" id="part-overview">
+  <div class="part-label">Part 1</div>
+  <h3>总览</h3>
+</div>
 
 <!-- ==================== 1. 产品全景 ==================== -->
 <section class="doc-section" id="overview">
@@ -345,29 +367,52 @@ code {
   </table>
 
   <div class="sub-label">三种游戏接入模式</div>
-  <table class="doc-table">
-    <thead><tr><th style="width:10%">模式</th><th style="width:22%">含义</th><th style="width:12%">平台认证</th><th style="width:56%">接入游戏</th></tr></thead>
-    <tbody>
-      <tr>
-        <td style="color:var(--t1);font-weight:700">① 完整托管</td>
-        <td>游戏方不自建认证系统，全部使用 WeGame 的认证能力</td>
-        <td><span style="color:var(--acc);font-weight:600">✓ 生效</span></td>
-        <td><span class="tag tag-dim" style="margin:2px">星痕共鸣</span> <span class="tag tag-dim" style="margin:2px">三国杀</span> <span class="tag tag-dim" style="margin:2px">终极角逐</span> <span class="tag tag-dim" style="margin:2px">QQ飞车</span> <span class="tag tag-dim" style="margin:2px">永恒轮回</span> <span class="tag tag-dim" style="margin:2px">矩阵：零日危机</span> <span class="tag tag-dim" style="margin:2px">流放之路：降临</span> <span class="tag tag-dim" style="margin:2px">暗区突围：无限</span> <span class="tag tag-dim" style="margin:2px">元梦之星</span> <span class="tag tag-dim" style="margin:2px">野蛮人大作战</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--t1);font-weight:700">② 双向互通</td>
-        <td>游戏方有自己的认证系统，与 WeGame 双向同步数据</td>
-        <td><span style="color:var(--acc);font-weight:600">✓ 生效</span></td>
-        <td><span class="tag tag-acc" style="margin:2px">逆战：未来 ⚠ 尚未上线</span></td>
-      </tr>
-      <tr>
-        <td style="color:var(--t1);font-weight:700">③ 单向输入</td>
-        <td>游戏方有完全独立的认证系统，不接收 WeGame 数据</td>
-        <td><span style="color:var(--t3);font-weight:600">✗ 不生效</span></td>
-        <td><span class="tag tag-dim" style="margin:2px">无畏契约</span> <span class="tag tag-dim" style="margin:2px">三角洲行动</span> <span class="tag tag-dim" style="margin:2px">穿越火线</span></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="card-grid" style="grid-template-columns:1fr;gap:14px">
+    <!-- ① 完整托管 -->
+    <div class="card" style="border-left:3px solid var(--acc);padding:20px 24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <span style="font-size:15px;font-weight:700;color:var(--acc);white-space:nowrap">① 完整托管</span>
+        <span style="color:var(--acc);font-weight:600;font-size:13px">✓ 平台认证生效</span>
+      </div>
+      <div style="font-size:14px;color:var(--t2);margin-bottom:12px">游戏方不自建认证系统，全部使用 WeGame 的认证能力。用户在平台完成一次认证，所有完整托管游戏自动生效。</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag tag-dim" style="margin:2px">星痕共鸣</span>
+        <span class="tag tag-dim" style="margin:2px">三国杀</span>
+        <span class="tag tag-dim" style="margin:2px">终极角逐</span>
+        <span class="tag tag-dim" style="margin:2px">QQ飞车</span>
+        <span class="tag tag-dim" style="margin:2px">永恒轮回</span>
+        <span class="tag tag-dim" style="margin:2px">矩阵：零日危机</span>
+        <span class="tag tag-dim" style="margin:2px">流放之路：降临</span>
+        <span class="tag tag-dim" style="margin:2px">暗区突围：无限</span>
+        <span class="tag tag-dim" style="margin:2px">元梦之星</span>
+        <span class="tag tag-dim" style="margin:2px">野蛮人大作战</span>
+      </div>
+    </div>
+    <!-- ② 双向互通 -->
+    <div class="card" style="border-left:3px solid var(--bd);padding:20px 24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <span style="font-size:15px;font-weight:700;color:var(--t1);white-space:nowrap">② 双向互通</span>
+        <span style="color:var(--acc);font-weight:600;font-size:13px">✓ 平台认证生效</span>
+      </div>
+      <div style="font-size:14px;color:var(--t2);margin-bottom:12px">游戏方有自己的认证系统，与 WeGame 双向同步数据。两边的认证结果互相打通。</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag tag-acc" style="margin:2px">逆战：未来 ⚠ 尚未上线</span>
+      </div>
+    </div>
+    <!-- ③ 单向输入 -->
+    <div class="card" style="border-left:3px solid var(--bd);padding:20px 24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <span style="font-size:15px;font-weight:700;color:var(--t1);white-space:nowrap">③ 单向输入</span>
+        <span style="color:var(--t3);font-weight:600;font-size:13px">✗ 平台认证不生效</span>
+      </div>
+      <div style="font-size:14px;color:var(--t2);margin-bottom:12px">游戏方有完全独立的认证系统，不接收 WeGame 数据。这些游戏只能在游戏内自行完成认证。</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag tag-dim" style="margin:2px">无畏契约</span>
+        <span class="tag tag-dim" style="margin:2px">三角洲行动</span>
+        <span class="tag tag-dim" style="margin:2px">穿越火线</span>
+      </div>
+    </div>
+  </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
     <div class="callout">
@@ -450,6 +495,12 @@ code {
   </div>
 </section>
 
+<!-- ===== PART 2 · 功能 ===== -->
+<div class="part-divider" id="part-features">
+  <div class="part-label">Part 2</div>
+  <h3>功能</h3>
+</div>
+
 <!-- ==================== 4. 平台专区功能 ==================== -->
 <section class="doc-section" id="platform">
   <div class="section-eyebrow">Features · Platform</div>
@@ -513,6 +564,12 @@ code {
     </div>
   </div>
 </section>
+
+<!-- ===== PART 3 · 流程 ===== -->
+<div class="part-divider" id="part-process">
+  <div class="part-label">Part 3</div>
+  <h3>流程</h3>
+</div>
 
 <!-- ==================== 6. 认证能力接入 ==================== -->
 <section class="doc-section" id="auth-onboard">
@@ -688,6 +745,12 @@ code {
     <div class="game-card"><div class="icon">💥</div><div class="name">穿越火线</div><div class="sub">火线社排名 · 每周任务</div></div>
   </div>
 </section>
+
+<!-- ===== PART 4 · 附录 ===== -->
+<div class="part-divider" id="part-appendix">
+  <div class="part-label">Part 4</div>
+  <h3>附录</h3>
+</div>
 
 <!-- ==================== 9. 资源与文档清单 ==================== -->
 <section class="doc-section" id="resources">
