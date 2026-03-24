@@ -195,7 +195,8 @@ code {
 .swim-row { display:grid; grid-template-columns:120px 1fr 1fr 1fr; border-bottom:1px solid var(--bd-light); }
 .swim-row:last-child { border-bottom:none; }
 .swim-label { padding:12px 14px; font-size:14px; font-weight:600; color:var(--t1); background:var(--surface); border-right:1px solid var(--bd-light); display:flex; align-items:center; gap:6px; }
-.swim-cell { padding:12px 14px; font-size:13px; color:var(--t2); line-height:1.7; display:flex; align-items:center; border-right:1px solid var(--bd-light); }
+.swim-cell { padding:12px 14px; font-size:13px; color:var(--t2); line-height:1.7; display:flex; align-items:center; border-right:1px solid var(--bd-light); flex-wrap:wrap; }
+.swim-cell code { white-space:nowrap; }
 .swim-cell:last-child { border-right:none; }
 
 /* === Journey === */
@@ -551,6 +552,9 @@ code {
       <a href="https://doc.weixin.qq.com/doc/w3_AdAAFAb7APcCNWtOiEQweQgepGXVO?scode=AJEAIQdfAAovoRUaAIAdAAFAb7APc" target="_blank" class="link-btn">📄 需求文档 →</a>
       <a href="https://www.figma.com/design/RRNGC0g4yZwdzPVEKiqokI/" target="_blank" class="link-btn">🎨 设计稿 Figma →</a>
     </div>
+    <div style="margin-top:16px">
+      <div class="img-wrap"><img src="img_template_demo.png" alt="通用模板示例" onerror="this.parentElement.innerHTML='<div style=&quot;padding:48px;text-align:center;color:var(--t3);font-size:13px;background:var(--surface);border-radius:8px&quot;>📸 通用模板专区示例截图<br><code style=&quot;font-size:12px&quot;>img_template_demo.png</code></div>'"><div class="img-cap">通用模板实际效果：Banner + 每日任务 + 邀请好礼 + 新手奖励 + 认证加码</div></div>
+    </div>
   </div>
 
   <!-- 定制化 -->
@@ -565,6 +569,12 @@ code {
       <div class="game-card"><div class="icon">👑</div><div class="name">洛克王国</div><div class="sub">高校特权 · 同校小伙伴</div></div>
       <div class="game-card"><div class="icon">⚔️</div><div class="name">无畏契约</div><div class="sub">任务升级 · 段位排行</div></div>
       <div class="game-card"><div class="icon">💥</div><div class="name">穿越火线</div><div class="sub">火线社排名 · 每周任务</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px">
+      <div class="img-wrap"><img src="img_delta_force.png" alt="三角洲行动高校专区" onerror="this.parentElement.innerHTML='<div style=&quot;padding:48px;text-align:center;color:var(--t3);font-size:13px;background:var(--surface);border-radius:8px&quot;>📸 三角洲行动高校专区截图<br><code style=&quot;font-size:12px&quot;>img_delta_force.png</code></div>'"><div class="img-cap">三角洲行动：每日好礼 + 社区发帖交友 + 本校活跃玩家</div></div>
+      <div class="img-wrap"><img src="img_roco_kingdom.png" alt="洛克王国高校专区" onerror="this.parentElement.innerHTML='<div style=&quot;padding:48px;text-align:center;color:var(--t3);font-size:13px;background:var(--surface);border-radius:8px&quot;>📸 洛克王国高校专区截图<br><code style=&quot;font-size:12px&quot;>img_roco_kingdom.png</code></div>'"><div class="img-cap">洛克王国：高校特权福利 + 首发任务 + 同校小伙伴</div></div>
+      <div class="img-wrap"><img src="img_valorant.png" alt="无畏契约高校专区" onerror="this.parentElement.innerHTML='<div style=&quot;padding:48px;text-align:center;color:var(--t3);font-size:13px;background:var(--surface);border-radius:8px&quot;>📸 无畏契约高校专区截图<br><code style=&quot;font-size:12px&quot;>img_valorant.png</code></div>'"><div class="img-cap">无畏契约：任务升级奖励 + 段位排行 + 瓦友社</div></div>
+      <div class="img-wrap"><img src="img_crossfire.png" alt="穿越火线高校专区" onerror="this.parentElement.innerHTML='<div style=&quot;padding:48px;text-align:center;color:var(--t3);font-size:13px;background:var(--surface);border-radius:8px&quot;>📸 穿越火线高校专区截图<br><code style=&quot;font-size:12px&quot;>img_crossfire.png</code></div>'"><div class="img-cap">穿越火线：火线社排名 + 每日补给 + 每周任务</div></div>
     </div>
   </div>
 </section>
@@ -658,11 +668,10 @@ code {
   <h2>通用模板接入流程</h2>
   <p class="desc">面向中长尾游戏的标准化接入流程。由运营向游戏项目组介绍高校专区能力，项目组有意向即可启动接入。全程游戏方零开发。</p>
 
-  <div class="stat-cards" style="grid-template-columns:repeat(4,1fr)">
+  <div class="stat-cards" style="grid-template-columns:repeat(3,1fr)">
     <div class="stat-card"><div class="val">2~2.5 周</div><div class="lab">从启动到上线</div></div>
     <div class="stat-card"><div class="val">零开发</div><div class="lab">游戏方无需写一行代码</div></div>
     <div class="stat-card"><div class="val">完整托管</div><div class="lab">认证 + 专区全由 WeGame 承担</div></div>
-    <div class="stat-card"><div class="val">无需对接接口</div><div class="lab">游戏方不需要接入任何接口</div></div>
   </div>
 
   <div class="sub-label">接入旅程（6 步）</div>
