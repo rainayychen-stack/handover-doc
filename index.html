@@ -436,14 +436,14 @@ code {
   <p class="desc">高校能力涉及 5 个协作方，以下是各方的职责边界和关键联系人。</p>
 
   <table class="doc-table">
-    <thead><tr><th style="width:4%"></th><th style="width:12%">部门</th><th style="width:9%">角色</th><th style="width:37%">职责说明</th><th style="width:16%">对接人</th><th style="width:22%">注意事项</th></tr></thead>
+    <thead><tr><th style="width:4%"></th><th style="width:11%">部门</th><th style="width:11%">角色</th><th style="width:36%">职责说明</th><th style="width:16%">对接人</th><th style="width:22%">注意事项</th></tr></thead>
     <tbody>
       <tr>
         <td style="font-size:16px;text-align:center">🎯</td>
         <td style="color:var(--t1);font-weight:600">游戏项目组</td>
         <td><span class="tag tag-acc">业务方</span></td>
-        <td>合作的甲方。提出高校专区需求，提供游戏内的任务内容、奖励素材，配合完成认证接入和功能测试</td>
-        <td style="color:var(--t3)">每个游戏项目组不同</td>
+        <td>合作的业务需求方。提出高校专区需求，提供游戏内的任务内容、奖励素材，配合完成认证接入和功能测试</td>
+        <td>每个游戏项目组不同，可找内部运营对接同学确认</td>
         <td style="color:var(--t3)">—</td>
       </tr>
       <tr>
@@ -486,7 +486,11 @@ code {
       <strong>WeGame ↔ QQ 游戏中心互通方案</strong><br>
       WG → 中心：全量同步 WeGame 认证数据，用户无需在中心二次认证<br>
       中心 → WG：中心认证状态回传至 WeGame<br>
-      <span style="color:var(--t3)">接口文档已互相提供，但双方均未开始开发</span>
+      <span style="color:var(--t3)">接口文档已互相提供，但双方均未开始开发</span><br>
+      <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+        <a href="https://iwiki.woa.com/p/4017162752" target="_blank" class="link-btn">📄 WeGame 获取学生高校身份认证状态（For QQ 游戏中心）→</a>
+        <a href="https://doc.weixin.qq.com/doc/w3_AEUAPQZWACkCNvIesvucXT0aqFnDn?scode=AJEAIQdfAAoK62tbj3Af8A2wbVAPU" target="_blank" class="link-btn">📄 游戏中心查询高校认证状态接口文档 →</a>
+      </div>
     </div>
     <div class="callout warn">
       <strong>⚠ 实名匹配数据未互通</strong><br>
@@ -661,7 +665,7 @@ code {
     <div class="stat-card"><div class="val">无需对接接口</div><div class="lab">游戏方不需要接入任何接口</div></div>
   </div>
 
-  <div class="sub-label">接入旅程（5 步）</div>
+  <div class="sub-label">接入旅程（6 步）</div>
   <div class="journey" style="padding:10px 0 24px">
     <div class="journey-step">
       <div class="journey-dot"></div>
@@ -701,6 +705,13 @@ code {
         <div class="journey-desc"><strong style="color:var(--t1)">全部由 WeGame 负责</strong><br>前端开发 + 后端开发 + 测试验收 + 上线发布</div>
       </div>
     </div>
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-body">
+        <div class="journey-title">⑥ 配置展示入口</div>
+        <div class="journey-desc">配置微信小程序展示卡片和平台高校专区资源位，确保用户能从多入口发现新上线的游戏特权</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -735,6 +746,7 @@ code {
     <div class="journey-step"><div class="journey-dot"></div><div class="journey-body"><div class="journey-title">开发实现</div><div class="journey-desc">前端 + 后端独立开发，按里程碑推进</div></div></div>
     <div class="journey-step"><div class="journey-dot"></div><div class="journey-body"><div class="journey-title">联调测试</div><div class="journey-desc">与游戏方联调，完成功能验收和 Bug 修复</div></div></div>
     <div class="journey-step"><div class="journey-dot"></div><div class="journey-body"><div class="journey-title">发布上线</div><div class="journey-desc">灰度 → 全量发布，运营持续跟进数据</div></div></div>
+    <div class="journey-step"><div class="journey-dot"></div><div class="journey-body"><div class="journey-title">配置展示入口</div><div class="journey-desc">配置微信小程序展示卡片和平台高校专区资源位，确保用户能从多入口发现新上线的游戏特权</div></div></div>
   </div>
 
   <div class="sub-label">已上线的定制专区（4 款）</div>
@@ -767,6 +779,8 @@ code {
       <tr><td style="font-weight:600;color:var(--t1)">平台高校专区二期需求</td><td><span class="tag tag-dim">TAPD</span></td><td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181128147860" target="_blank" class="link-btn">打开 →</a></td></tr>
       <tr><td style="font-weight:600;color:var(--t1)">通用模板需求文档</td><td><span class="tag tag-dim">企微文档</span></td><td><a href="https://doc.weixin.qq.com/doc/w3_AdAAFAb7APcCNWtOiEQweQgepGXVO?scode=AJEAIQdfAAovoRUaAIAdAAFAb7APc" target="_blank" class="link-btn">打开 →</a></td></tr>
       <tr><td style="font-weight:600;color:var(--t1)">解绑与换绑需求</td><td><span class="tag tag-dim">TAPD</span></td><td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181131631656" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">WeGame 获取学生高校身份认证状态（For QQ 游戏中心）</td><td><span class="tag tag-dim">iWiki</span></td><td><a href="https://iwiki.woa.com/p/4017162752" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">游戏中心查询高校认证状态接口文档</td><td><span class="tag tag-dim">企微文档</span></td><td><a href="https://doc.weixin.qq.com/doc/w3_AEUAPQZWACkCNvIesvucXT0aqFnDn?scode=AJEAIQdfAAoK62tbj3Af8A2wbVAPU" target="_blank" class="link-btn">打开 →</a></td></tr>
     </tbody>
   </table>
 
