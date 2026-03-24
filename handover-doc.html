@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rainayychen 工作交接文档</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg: #ffffff;
+  --surface: #f8f9fa;
+  --surface2: #f1f3f5;
+  --t1: #1a1a2e;
+  --t2: #4a4a5e;
+  --t3: #8b8ba0;
+  --acc: #e07a2f;
+  --acc2: #d46b1f;
+  --acc-light: #fff5ed;
+  --acc-bd: rgba(224,122,47,.2);
+  --bd: #e8e8ef;
+  --bd-light: #f0f0f5;
+  --sans: 'Inter','Noto Sans SC',-apple-system,'SF Pro Text','Helvetica Neue','Microsoft YaHei',sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { -webkit-font-smoothing:antialiased; scroll-behavior:smooth; }
+body { font-family:var(--sans); background:var(--bg); color:var(--t1); font-size:16px; line-height:1.8; }
+::selection { background:rgba(224,122,47,.2); color:var(--t1); }
+
+/* === Layout === */
+.doc-container {
+  max-width:1200px;
+  margin:0 auto;
+  padding:60px 40px 80px;
+}
+
+/* === Nav / TOC sidebar === */
+.doc-nav {
+  position:fixed; top:0; left:0; width:240px; height:100vh;
+  padding:32px 20px;
+  background:var(--surface);
+  border-right:1px solid var(--bd);
+  overflow-y:auto;
+  z-index:100;
+}
+.doc-nav-title {
+  font-size:13px; font-weight:700; color:var(--t3);
+  letter-spacing:.1em; text-transform:uppercase;
+  margin-bottom:20px; padding-bottom:12px;
+  border-bottom:1px solid var(--bd);
+}
+.doc-nav a {
+  display:block; padding:6px 10px; margin:2px 0;
+  font-size:14px; color:var(--t2); text-decoration:none;
+  border-radius:6px; transition:all .2s;
+  line-height:1.5;
+}
+.doc-nav a:hover { background:var(--surface2); color:var(--t1); }
+.doc-nav a.active { background:var(--acc-light); color:var(--acc2); font-weight:600; }
+.doc-nav .nav-group {
+  font-size:11px; font-weight:700; color:var(--t3);
+  letter-spacing:.08em; text-transform:uppercase;
+  margin:16px 0 6px 10px;
+}
+
+.doc-body {
+  margin-left:240px;
+}
+@media(max-width:900px) {
+  .doc-nav { display:none; }
+  .doc-body { margin-left:0; }
+}
+
+/* === Cover === */
+.doc-cover {
+  text-align:center;
+  padding:80px 40px 60px;
+  border-bottom:1px solid var(--bd);
+  margin-bottom:48px;
+}
+.doc-cover .eyebrow {
+  font-size:12px; font-weight:700; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--t3); margin-bottom:12px;
+}
+.doc-cover h1 {
+  font-size:clamp(32px,4vw,48px); font-weight:700;
+  letter-spacing:-.02em; line-height:1.15; color:var(--t1);
+}
+.doc-cover h1 em { font-style:normal; color:var(--acc); }
+.doc-cover .subtitle {
+  font-size:18px; color:var(--t2); margin-top:12px; font-weight:400;
+}
+
+/* === Sections === */
+.doc-section {
+  padding:48px 20px;
+  border-bottom:1px solid var(--bd-light);
+}
+.doc-section:last-child { border-bottom:none; }
+
+.section-eyebrow {
+  font-size:11px; font-weight:700; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--t3); margin-bottom:6px;
+}
+.doc-section h2 {
+  font-size:28px; font-weight:700; color:var(--t1);
+  margin-bottom:8px; letter-spacing:-.01em;
+}
+.doc-section .desc {
+  font-size:16px; color:var(--t2); line-height:1.8;
+  max-width:800px; margin-bottom:32px;
+}
+
+.sub-label {
+  font-size:13px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--t3); margin-bottom:14px;
+}
+
+/* === Tables === */
+.doc-table {
+  width:100%; border-collapse:collapse; font-size:15px; margin-bottom:24px;
+}
+.doc-table thead th {
+  background:var(--surface); padding:12px 16px;
+  text-align:left; font-weight:600; color:var(--t1);
+  font-size:13px; letter-spacing:.03em;
+  border-bottom:2px solid var(--bd);
+}
+.doc-table tbody td {
+  padding:12px 16px; border-bottom:1px solid var(--bd-light);
+  color:var(--t2); vertical-align:top; line-height:1.7;
+}
+.doc-table tbody tr:last-child td { border-bottom:none; }
+.doc-table tbody tr:hover td { background:var(--surface); }
+
+/* === Cards === */
+.card-grid { display:grid; gap:16px; margin-bottom:24px; }
+.card {
+  padding:24px; background:var(--surface); border-radius:10px;
+  border:1px solid var(--bd-light);
+}
+.card-highlight {
+  border-top:3px solid var(--acc);
+}
+.card-title { font-size:18px; font-weight:700; color:var(--t1); margin-bottom:4px; }
+.card-sub { font-size:14px; color:var(--t3); }
+
+.feat-item {
+  display:flex; align-items:flex-start; gap:14px;
+  padding:12px 0; border-bottom:1px solid var(--bd-light);
+}
+.feat-item:last-child { border-bottom:none; }
+.feat-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+.feat-title { font-size:15px; font-weight:600; color:var(--t1); }
+.feat-desc { font-size:14px; color:var(--t2); margin-top:2px; line-height:1.6; }
+
+/* === Tags === */
+.tag { display:inline-block; padding:2px 10px; border-radius:4px; font-size:12px; font-weight:600; }
+.tag-acc { background:var(--acc-light); color:var(--acc2); }
+.tag-dim { background:var(--surface2); color:var(--t3); }
+.tag-light { background:var(--surface); color:var(--t2); border:1px solid var(--bd); }
+
+/* === Callout === */
+.callout {
+  padding:16px 20px; border-left:3px solid var(--acc);
+  background:var(--acc-light); border-radius:0 8px 8px 0;
+  font-size:14px; color:var(--t2); line-height:1.8; margin-bottom:16px;
+}
+.callout strong { color:var(--acc2); font-weight:600; }
+.callout.warn { border-left-color:var(--t3); background:var(--surface); }
+.callout.warn strong { color:var(--t1); }
+
+/* === Code === */
+code {
+  color:var(--acc2); background:var(--acc-light);
+  padding:2px 6px; border-radius:3px; font-size:13px;
+  font-family:'SF Mono','Fira Code','Consolas',monospace;
+}
+
+/* === Link button === */
+.link-btn {
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:13px; font-weight:600; color:var(--acc2); text-decoration:none;
+  padding:5px 12px; border-radius:5px;
+  background:var(--acc-light); border:1px solid var(--acc-bd);
+  transition:all .2s; margin:3px;
+}
+.link-btn:hover { background:rgba(224,122,47,.12); border-color:rgba(224,122,47,.3); }
+
+/* === Swimlane === */
+.swimlane { width:100%; border:1px solid var(--bd); border-radius:10px; overflow:hidden; margin-bottom:16px; }
+.swim-header { display:grid; grid-template-columns:120px 1fr 1fr 1fr; background:var(--surface); border-bottom:2px solid var(--bd); }
+.swim-header div { padding:10px 14px; font-size:12px; font-weight:700; color:var(--t3); letter-spacing:.06em; text-transform:uppercase; }
+.swim-row { display:grid; grid-template-columns:120px 1fr 1fr 1fr; border-bottom:1px solid var(--bd-light); }
+.swim-row:last-child { border-bottom:none; }
+.swim-label { padding:12px 14px; font-size:14px; font-weight:600; color:var(--t1); background:var(--surface); border-right:1px solid var(--bd-light); display:flex; align-items:center; gap:6px; }
+.swim-cell { padding:12px 14px; font-size:13px; color:var(--t2); line-height:1.7; display:flex; align-items:center; border-right:1px solid var(--bd-light); }
+.swim-cell:last-child { border-right:none; }
+
+/* === Journey === */
+.journey { display:flex; align-items:flex-start; gap:0; width:100%; position:relative; margin-bottom:24px; }
+.journey::before { content:''; position:absolute; top:16px; left:24px; right:24px; height:2px; background:var(--bd); border-radius:1px; }
+.journey-step { flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; padding:0 8px; }
+.journey-dot { width:12px; height:12px; border-radius:50%; background:var(--acc); border:3px solid var(--bg); margin-bottom:12px; z-index:1; flex-shrink:0; position:relative; top:10px; box-shadow:0 0 0 2px var(--acc); }
+.journey-body { padding:18px 6px 0; }
+.journey-title { font-size:14px; font-weight:700; color:var(--t1); margin-bottom:4px; }
+.journey-desc { font-size:13px; color:var(--t2); line-height:1.6; }
+
+/* === Stat cards === */
+.stat-cards { display:grid; gap:14px; margin-bottom:28px; }
+.stat-card { padding:20px; background:var(--surface); border-radius:10px; border:1px solid var(--bd-light); text-align:center; }
+.stat-card .val { font-size:clamp(22px,2.5vw,30px); font-weight:700; line-height:1; color:var(--t1); }
+.stat-card .lab { font-size:13px; color:var(--t3); margin-top:6px; font-weight:500; }
+
+/* === Game cards === */
+.game-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:16px; }
+.game-card { border-radius:10px; border:1px solid var(--bd-light); background:var(--surface); text-align:center; padding:24px 16px; }
+.game-card .icon { font-size:28px; margin-bottom:8px; }
+.game-card .name { font-size:15px; font-weight:600; color:var(--t1); }
+.game-card .sub { font-size:12px; color:var(--t3); margin-top:4px; }
+
+/* === Progress === */
+.progress-track { width:100%; height:6px; background:var(--surface2); border-radius:4px; overflow:hidden; }
+.progress-fill { height:100%; border-radius:4px; background:var(--acc); }
+
+/* === Images === */
+.img-wrap { border-radius:10px; overflow:hidden; border:1px solid var(--bd); position:relative; }
+.img-wrap img { width:100%; display:block; }
+.img-cap { padding:8px 14px; background:var(--surface); font-size:12px; color:var(--t3); font-weight:500; text-align:center; }
+
+/* === Print === */
+@media print {
+  .doc-nav { display:none; }
+  .doc-body { margin-left:0; }
+  .doc-section { page-break-inside:avoid; }
+  body { font-size:14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Side Navigation -->
+<nav class="doc-nav">
+  <div class="doc-nav-title">目录</div>
+  <div class="nav-group">认知</div>
+  <a href="#overview">产品全景</a>
+  <a href="#auth">认证体系</a>
+  <a href="#collab">协作部门</a>
+  <div class="nav-group">成果</div>
+  <a href="#platform">平台专区功能</a>
+  <a href="#pergame">单游戏专区功能</a>
+  <div class="nav-group">实操</div>
+  <a href="#auth-onboard">认证能力接入</a>
+  <a href="#template-onboard">通用模板接入</a>
+  <a href="#custom-onboard">定制专区接入</a>
+  <div class="nav-group">收尾</div>
+  <a href="#resources">资源清单</a>
+  <a href="#roadmap">Roadmap</a>
+</nav>
+
+<div class="doc-body">
+
+<!-- Cover -->
+<div class="doc-cover">
+  <div class="eyebrow">Handover Document</div>
+  <h1>Rainayychen<br>工作<em>交接</em>文档</h1>
+  <p class="subtitle">WeGame · 高校能力</p>
+</div>
+
+<div class="doc-container">
+
+<!-- ==================== 1. 产品全景 ==================== -->
+<section class="doc-section" id="overview">
+  <div class="section-eyebrow">Architecture</div>
+  <h2>产品全景</h2>
+  <p class="desc">WeGame 高校能力分为两大板块——<strong style="color:var(--acc)">平台高校</strong>覆盖所有 WeGame 用户，<strong>单游戏高校</strong>服务各游戏内的学生生态。</p>
+
+  <div class="card-grid" style="grid-template-columns:1fr 1fr">
+    <!-- 平台高校 -->
+    <div class="card card-highlight">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+        <span style="font-size:24px">🌐</span>
+        <div>
+          <div class="card-title" style="color:var(--acc)">平台高校</div>
+          <div class="card-sub">覆盖所有 WeGame 用户</div>
+        </div>
+      </div>
+      <div class="feat-item"><span class="feat-icon">🏠</span><div><div class="feat-title">平台高校专区</div><div class="feat-desc">WeGame 客户端一级 TAB "高校"，面向全量用户</div></div></div>
+      <div class="feat-item"><span class="feat-icon">📱</span><div><div class="feat-title">高校认证小程序</div><div class="feat-desc">微信端独立小程序，补充认证通道</div></div></div>
+      <div class="feat-item"><span class="feat-icon">🔑</span><div><div class="feat-title">平台级认证</div><div class="feat-desc">认证一次，所有"完整托管"游戏通用</div></div></div>
+    </div>
+    <!-- 单游戏高校 -->
+    <div class="card" style="border-top:3px solid var(--bd)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+        <span style="font-size:24px">🎮</span>
+        <div>
+          <div class="card-title">单游戏高校</div>
+          <div class="card-sub">服务各游戏内的学生生态</div>
+        </div>
+      </div>
+      <div class="feat-item"><span class="feat-icon">📦</span><div><div class="feat-title">单游戏高校专区</div><div class="feat-desc">各游戏助手页内的高校专区模块</div></div></div>
+      <div class="feat-item"><span class="feat-icon">🔐</span><div><div class="feat-title">游戏级认证</div><div class="feat-desc">仅在当前游戏内有效，不影响其他游戏</div></div></div>
+      <div class="feat-item"><span class="feat-icon">⬆️</span><div><div class="feat-title">可升级为平台认证</div><div class="feat-desc">跳转至平台专区即可升级为全局认证</div></div></div>
+    </div>
+  </div>
+
+  <div class="sub-label">核心差异对比</div>
+  <table class="doc-table">
+    <thead><tr><th style="width:18%">对比维度</th><th style="width:41%">平台高校</th><th style="width:41%">单游戏高校</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;color:var(--t1)">覆盖范围</td><td>所有 WeGame 用户，不区分游戏</td><td>仅限单个游戏内的学生用户</td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">认证效力</td><td>全局通用 — 认证一次，所有"完整托管"游戏自动生效</td><td>仅限当前游戏，不影响其他游戏</td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">入口位置</td><td>WeGame 客户端"高校"一级 TAB + 微信小程序</td><td>各游戏助手页内"高校专区"模块</td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">可否升级</td><td>已是最高等级</td><td>可跳转至平台专区升级为平台认证</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 2. 认证体系 ==================== -->
+<section class="doc-section" id="auth">
+  <div class="section-eyebrow">Authentication</div>
+  <h2>认证体系</h2>
+  <p class="desc">高校认证分 QQ 和微信两个通道，游戏接入模式分三种，决定了认证数据如何流通。</p>
+
+  <div class="sub-label">两大认证通道</div>
+  <table class="doc-table">
+    <thead><tr><th style="width:10%">通道</th><th style="width:32%">认证链路</th><th style="width:14%">平台认证</th><th style="width:14%">单游戏认证</th><th style="width:30%">备注</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="tag tag-light">QQ</span></td>
+        <td>PC 端展示二维码 → 手机 QQ 扫码 → 跳转 QQ 钱包高校认证页面完成认证</td>
+        <td><span style="color:var(--acc);font-weight:600">✓ 支持</span></td>
+        <td><span style="color:var(--acc);font-weight:600">✓ 支持</span></td>
+        <td>主要认证通道，认证数据由 QQ 钱包提供</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-light">微信</span></td>
+        <td>微信支付返回"是否学生"身份 → 引导至 WeGame 自建的高校认证小程序，通过学信网补齐学校等详细信息</td>
+        <td><span style="color:var(--acc);font-weight:600">✓ 支持</span></td>
+        <td><span style="color:var(--t3);font-weight:600">✗ 暂不支持</span></td>
+        <td>补充通道，微信支付只提供是/否，需学信网补充完整信息</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-label">三种游戏接入模式</div>
+  <table class="doc-table">
+    <thead><tr><th style="width:10%">模式</th><th style="width:22%">含义</th><th style="width:12%">平台认证</th><th style="width:56%">接入游戏</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--t1);font-weight:700">① 完整托管</td>
+        <td>游戏方不自建认证系统，全部使用 WeGame 的认证能力</td>
+        <td><span style="color:var(--acc);font-weight:600">✓ 生效</span></td>
+        <td><span class="tag tag-dim" style="margin:2px">星痕共鸣</span> <span class="tag tag-dim" style="margin:2px">三国杀</span> <span class="tag tag-dim" style="margin:2px">终极角逐</span> <span class="tag tag-dim" style="margin:2px">QQ飞车</span> <span class="tag tag-dim" style="margin:2px">永恒轮回</span> <span class="tag tag-dim" style="margin:2px">矩阵：零日危机</span> <span class="tag tag-dim" style="margin:2px">流放之路：降临</span> <span class="tag tag-dim" style="margin:2px">暗区突围：无限</span> <span class="tag tag-dim" style="margin:2px">元梦之星</span> <span class="tag tag-dim" style="margin:2px">野蛮人大作战</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--t1);font-weight:700">② 双向互通</td>
+        <td>游戏方有自己的认证系统，与 WeGame 双向同步数据</td>
+        <td><span style="color:var(--acc);font-weight:600">✓ 生效</span></td>
+        <td><span class="tag tag-acc" style="margin:2px">逆战：未来 ⚠ 尚未上线</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--t1);font-weight:700">③ 单向输入</td>
+        <td>游戏方有完全独立的认证系统，不接收 WeGame 数据</td>
+        <td><span style="color:var(--t3);font-weight:600">✗ 不生效</span></td>
+        <td><span class="tag tag-dim" style="margin:2px">无畏契约</span> <span class="tag tag-dim" style="margin:2px">三角洲行动</span> <span class="tag tag-dim" style="margin:2px">穿越火线</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="callout">
+      <strong>认证查询接口</strong><br>
+      通过 <code>certified</code> 字段判断用户是否已认证（返回 0 或 1）。支持 4 种 ID 类型查询。<br>
+      <strong>注意</strong>：接口不返回毕业时间。新游戏接入前必须先分配独立的 <code>from_src</code>，找 <strong style="color:var(--t1)">alexnhqin</strong> 申请。
+      <div style="margin-top:10px"><a href="https://iwiki.woa.com/p/4014099263" target="_blank" class="link-btn">📄 接口文档 →</a></div>
+    </div>
+    <div class="callout warn">
+      <strong>⚠ 认证数据过期风险</strong><br>
+      当前存在已知问题：游戏方传来的认证状态 WeGame 直接存储，用户毕业后认证状态不会自动失效，仍显示"已认证"。需要增加解绑/换绑机制。
+      <div style="margin-top:10px"><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181131631656" target="_blank" class="link-btn">📋 TAPD：解绑与换绑需求 →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. 协作部门 ==================== -->
+<section class="doc-section" id="collab">
+  <div class="section-eyebrow">Collaboration</div>
+  <h2>协作部门</h2>
+  <p class="desc">高校能力涉及 5 个协作方，以下是各方的职责边界和关键联系人。</p>
+
+  <table class="doc-table">
+    <thead><tr><th style="width:4%"></th><th style="width:12%">部门</th><th style="width:9%">角色</th><th style="width:37%">职责说明</th><th style="width:16%">对接人</th><th style="width:22%">注意事项</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-size:16px;text-align:center">🎯</td>
+        <td style="color:var(--t1);font-weight:600">游戏项目组</td>
+        <td><span class="tag tag-acc">业务方</span></td>
+        <td>合作的甲方。提出高校专区需求，提供游戏内的任务内容、奖励素材，配合完成认证接入和功能测试</td>
+        <td style="color:var(--t3)">每个游戏项目组不同</td>
+        <td style="color:var(--t3)">—</td>
+      </tr>
+      <tr>
+        <td style="font-size:16px;text-align:center">🖥️</td>
+        <td style="color:var(--t1);font-weight:600">WeGame</td>
+        <td><span class="tag tag-light">主体</span></td>
+        <td>我们自己。负责产品方案设计、前后端开发、运营配置、对外接口维护等全链路工作</td>
+        <td style="color:var(--t3)">—</td>
+        <td style="color:var(--t3)">—</td>
+      </tr>
+      <tr>
+        <td style="font-size:16px;text-align:center">💰</td>
+        <td style="color:var(--t1);font-weight:600">QQ 钱包</td>
+        <td><span class="tag tag-light">认证底座</span></td>
+        <td>提供底层高校认证能力。WeGame 所有通过 QQ 登录态完成的认证，底层都调用 QQ 钱包接口</td>
+        <td><strong>dongqiyang</strong><br><span style="font-size:12px;color:var(--t3)">杨冬琪</span></td>
+        <td style="color:var(--t3)">—</td>
+      </tr>
+      <tr>
+        <td style="font-size:16px;text-align:center">🎮</td>
+        <td style="color:var(--t1);font-weight:600">QQ 游戏中心</td>
+        <td><span class="tag tag-light">互通方</span></td>
+        <td>有自己独立的高校认证体系（全平台通票），计划与 WeGame 双向打通认证数据</td>
+        <td><strong>orrinye</strong><br><span style="font-size:12px;color:var(--t3)">叶傲林</span></td>
+        <td><span style="color:var(--acc);font-weight:600">🚨 双向互通尚未开发，接口文档已互提供</span></td>
+      </tr>
+      <tr>
+        <td style="font-size:16px;text-align:center">⭐</td>
+        <td style="color:var(--t1);font-weight:600">增值服务部</td>
+        <td><span class="tag tag-dim">代开发方</span></td>
+        <td>部分游戏方委托增值服务部完成高校认证开发，增值服务部再与 WeGame 联调</td>
+        <td><strong>Rebeccayang</strong> <span style="font-size:12px;color:var(--t3)">杨丹</span><br><strong>okwu</strong> <span style="font-size:12px;color:var(--t3)">吴文彬</span></td>
+        <td><span style="color:var(--acc);font-weight:600">⚠ 实名匹配数据未互通</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="callout">
+      <strong>WeGame ↔ QQ 游戏中心互通方案</strong><br>
+      WG → 中心：全量同步 WeGame 认证数据，用户无需在中心二次认证<br>
+      中心 → WG：中心认证状态回传至 WeGame<br>
+      <span style="color:var(--t3)">接口文档已互相提供，但双方均未开始开发</span>
+    </div>
+    <div class="callout warn">
+      <strong>⚠ 实名匹配数据未互通</strong><br>
+      三角洲行动、无畏契约、穿越火线走的是"实名匹配"模式（通过游戏内实名信息直接匹配学生身份），WeGame 无法从中控（腾讯用户实名信息管控平台）申请实名信息，因此这几款游戏无法使用平台认证
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. 平台专区功能 ==================== -->
+<section class="doc-section" id="platform">
+  <div class="section-eyebrow">Features · Platform</div>
+  <h2>平台高校专区</h2>
+  <p class="desc">入口位于 WeGame 客户端商店下方的一级 TAB"高校"。以下是专区内的完整功能模块。</p>
+
+  <div class="sub-label">核心功能模块</div>
+  <div class="card-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:28px">
+    <div class="card"><div style="font-size:22px;margin-bottom:6px">🔑</div><div class="feat-title">认证 + 一键激活</div><div class="feat-desc">用户完成高校认证后，一键领取所有已接入游戏的学生特权奖励</div></div>
+    <div class="card"><div style="font-size:22px;margin-bottom:6px">🎮</div><div class="feat-title">游戏特权卡片</div><div class="feat-desc">横向滑动浏览所有已接入高校能力的游戏，展示各游戏学生专属特权</div></div>
+    <div class="card"><div style="font-size:22px;margin-bottom:6px">📰</div><div class="feat-title">帖子流</div><div class="feat-desc">高校社区内容流，支持"热门/本校"筛选 + "最热/最新"排序</div></div>
+    <div class="card"><div style="font-size:22px;margin-bottom:6px">🔥</div><div class="feat-title">热门高校话题</div><div class="feat-desc">类似热搜的话题榜单，展示当前最火的高校讨论话题</div></div>
+    <div class="card"><div style="font-size:22px;margin-bottom:6px">🏆</div><div class="feat-title">排行榜</div><div class="feat-desc">个人排行（全国 / 本校）+ 学校排行（全国），激励学生活跃</div></div>
+    <div class="card"><div style="font-size:22px;margin-bottom:6px">📋</div><div class="feat-title">需求文档</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181126380931" target="_blank" class="link-btn">一期需求 →</a><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181128147860" target="_blank" class="link-btn">二期需求 →</a></div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="img-wrap"><img src="img_platform_hero.png" alt="首屏" onerror="this.parentElement.innerHTML='<div style=&quot;padding:48px;text-align:center;color:var(--t3);font-size:13px;background:var(--surface)&quot;>📸 首屏截图：认证入口 + 一键激活 + 游戏卡片</div>'"><div class="img-cap">首屏：认证入口 + 一键激活 + 游戏卡片</div></div>
+    <div class="img-wrap"><img src="img_platform_community.png" alt="社区" onerror="this.parentElement.innerHTML='<div style=&quot;padding:48px;text-align:center;color:var(--t3);font-size:13px;background:var(--surface)&quot;>📸 社区截图：帖子流 + 话题榜 + 排行</div>'"><div class="img-cap">社区：帖子流 + 话题榜 + 排行</div></div>
+  </div>
+</section>
+
+<!-- ==================== 5. 单游戏专区 ==================== -->
+<section class="doc-section" id="pergame">
+  <div class="section-eyebrow">Features · Per-Game</div>
+  <h2>单游戏专区功能</h2>
+  <p class="desc">每个接入游戏在各自的游戏助手页内都有独立的高校专区。分为<strong style="color:var(--acc)">通用模板</strong>（标准化）和<strong>定制化专区</strong>（独立定制）两种形式。</p>
+
+  <!-- 通用模板 -->
+  <div style="margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+      <span style="font-size:20px">📦</span>
+      <span style="font-size:18px;font-weight:700">通用模板</span>
+      <span style="font-size:13px;color:var(--t3)">适用于中长尾游戏 · 标准化五大模块 · 无需游戏方开发</span>
+    </div>
+    <div class="card-grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:14px">
+      <div class="card" style="text-align:center;padding:16px"><div style="font-size:20px;margin-bottom:4px">🖼️</div><div class="feat-title" style="font-size:14px">Banner</div><div style="font-size:12px;color:var(--t3)">活动推广横幅入口</div></div>
+      <div class="card" style="text-align:center;padding:16px"><div style="font-size:20px;margin-bottom:4px">📋</div><div class="feat-title" style="font-size:14px">每日任务</div><div style="font-size:12px;color:var(--t3)">日常活跃打卡任务</div></div>
+      <div class="card" style="text-align:center;padding:16px"><div style="font-size:20px;margin-bottom:4px">🤝</div><div class="feat-title" style="font-size:14px">邀请任务</div><div style="font-size:12px;color:var(--t3)">邀请好友完成裂变增长</div></div>
+      <div class="card" style="text-align:center;padding:16px"><div style="font-size:20px;margin-bottom:4px">🎁</div><div class="feat-title" style="font-size:14px">新手奖励</div><div style="font-size:12px;color:var(--t3)">新认证用户首次奖励</div></div>
+      <div class="card" style="text-align:center;padding:16px"><div style="font-size:20px;margin-bottom:4px">⭐</div><div class="feat-title" style="font-size:14px">认证加码</div><div style="font-size:12px;color:var(--t3)">已认证学生的额外奖励加成</div></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="https://doc.weixin.qq.com/doc/w3_AdAAFAb7APcCNWtOiEQweQgepGXVO?scode=AJEAIQdfAAovoRUaAIAdAAFAb7APc" target="_blank" class="link-btn">📄 需求文档 →</a>
+      <a href="https://www.figma.com/design/RRNGC0g4yZwdzPVEKiqokI/" target="_blank" class="link-btn">🎨 设计稿 Figma →</a>
+    </div>
+  </div>
+
+  <!-- 定制化 -->
+  <div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+      <span style="font-size:20px">✨</span>
+      <span style="font-size:18px;font-weight:700">定制化专区</span>
+      <span style="font-size:13px;color:var(--t3)">面向头部游戏 · 每个游戏独立定制 · 已上线 4 款</span>
+    </div>
+    <div class="game-grid">
+      <div class="game-card"><div class="icon">🔫</div><div class="name">三角洲行动</div><div class="sub">每日好礼 · 社区 · QQ加群</div></div>
+      <div class="game-card"><div class="icon">👑</div><div class="name">洛克王国</div><div class="sub">高校特权 · 同校小伙伴</div></div>
+      <div class="game-card"><div class="icon">⚔️</div><div class="name">无畏契约</div><div class="sub">任务升级 · 段位排行</div></div>
+      <div class="game-card"><div class="icon">💥</div><div class="name">穿越火线</div><div class="sub">火线社排名 · 每周任务</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 6. 认证能力接入 ==================== -->
+<section class="doc-section" id="auth-onboard">
+  <div class="section-eyebrow">Onboarding · Auth</div>
+  <h2>认证能力接入</h2>
+  <p class="desc">无论是通用模板还是定制专区，认证能力的接入流程是统一的。以下是 QQ 登录态认证的完整接入步骤。</p>
+
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+    <span class="tag tag-acc" style="font-size:13px;padding:4px 12px">QQ 登录态认证接入步骤</span>
+  </div>
+  <div class="swimlane" style="margin-bottom:20px">
+    <div class="swim-header">
+      <div>步骤</div>
+      <div>具体操作</div>
+      <div>负责方</div>
+      <div>关键信息</div>
+    </div>
+    <div class="swim-row">
+      <div class="swim-label"><span style="color:var(--acc);font-weight:700">①</span> 申请组件</div>
+      <div class="swim-cell">向 QQ 钱包申请高校认证组件，游戏方只需提供游戏名称和 logo 即可</div>
+      <div class="swim-cell"><strong style="color:var(--t1)">WeGame 产品</strong>负责填表申请</div>
+      <div class="swim-cell" style="flex-direction:column;align-items:flex-start;gap:4px">
+        <span>签名公钥 / 回调Key → 找 <strong style="color:var(--acc2)">skywli</strong></span>
+        <span>回调地址：<code>l5: 192000065:83098</code></span>
+      </div>
+    </div>
+    <div class="swim-row">
+      <div class="swim-label"><span style="color:var(--acc);font-weight:700">②</span> 数据隔离</div>
+      <div class="swim-cell">申请完成后，为新游戏分配独立的 <code>from_src</code> 标识，实现数据隔离</div>
+      <div class="swim-cell">找后端 <strong style="color:var(--acc2)">alexnhqin</strong> 分配</div>
+      <div class="swim-cell">每个新游戏必须有独立的 from_src，否则数据会串</div>
+    </div>
+    <div class="swim-row">
+      <div class="swim-label"><span style="color:var(--acc);font-weight:700">③</span> 查询接口</div>
+      <div class="swim-cell">对接认证查询接口，使游戏方能查询用户是否已认证</div>
+      <div class="swim-cell">"双向互通"和"完整托管"模式的游戏需要</div>
+      <div class="swim-cell">"单向输入"模式的游戏<strong style="color:var(--t1)">不需要对接此接口</strong></div>
+    </div>
+    <div class="swim-row">
+      <div class="swim-label"><span style="color:var(--acc);font-weight:700">④</span> 引导二维码</div>
+      <div class="swim-cell">获取认证引导二维码，用于在游戏内展示引导用户扫码认证</div>
+      <div class="swim-cell">QQ 钱包自动生成并发给 WeGame</div>
+      <div class="swim-cell">无需额外联系项目组</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px">
+    <a href="https://doc.weixin.qq.com/sheet/e3_ALgATgYCACoFnh1fk2wT70CByND1c?scode=AJEAIQdfAAoqFSyfuoAdAAFAb7APc&tab=BB08J2" target="_blank" class="link-btn">📊 组件申请表 →</a>
+    <a href="https://doc.weixin.qq.com/doc/w3_AXwAFAblAAwCN9RqEwRBtTnef0u9s?scode=AJEAIQdfAAoP6JiIM6AdAAFAb7APc" target="_blank" class="link-btn">📄 组件介绍文档 →</a>
+    <a href="https://iwiki.woa.com/p/4015821543" target="_blank" class="link-btn">📄 认证流程 Wiki →</a>
+    <a href="https://iwiki.woa.com/p/4014099263" target="_blank" class="link-btn">📄 查询接口文档 →</a>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><span class="tag tag-light" style="font-size:12px">微信登录态认证</span></div>
+      <p style="font-size:14px;color:var(--t2);line-height:1.7"><strong style="color:var(--t1)">无需额外接入</strong> — 所有游戏统一引导用户到高校认证小程序完成微信端认证。认证后的信息可通过查询接口获取。</p>
+    </div>
+    <div class="card">
+      <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px">🧪 测试重点</div>
+      <div style="font-size:13px;color:var(--t2);line-height:1.7">
+        <strong style="color:var(--t1)">1. 数据隔离验证</strong> — 在 A 游戏完成单游戏认证后，B 游戏不应获取到认证状态<br>
+        <strong style="color:var(--t1)">2. 平台独立性验证</strong> — 单游戏认证不应覆盖或影响平台认证状态
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px">关键联系人</div>
+      <div style="font-size:13px;line-height:2.2">
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--t3)">签名公钥 / 回调Key</span><strong>skywli</strong></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--t3)">数据隔离 / from_src</span><strong>alexnhqin</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px">
+    <strong>关键配置参数</strong> — QQ 钱包认证成功后的回调路径（在申请组件时填写）：<code>/wegame/platform/game/StudentAuth/NotifyState?gameid=<span style="color:var(--acc)">{appid}</span></code>，其中 <code>{appid}</code> 替换为具体游戏的 appid
+  </div>
+</section>
+
+<!-- ==================== 7. 通用模板接入 ==================== -->
+<section class="doc-section" id="template-onboard">
+  <div class="section-eyebrow">Onboarding · Template</div>
+  <h2>通用模板接入流程</h2>
+  <p class="desc">面向中长尾游戏的标准化接入流程。由运营向游戏项目组介绍高校专区能力，项目组有意向即可启动接入。全程游戏方零开发。</p>
+
+  <div class="stat-cards" style="grid-template-columns:repeat(4,1fr)">
+    <div class="stat-card"><div class="val">2~2.5 周</div><div class="lab">从启动到上线</div></div>
+    <div class="stat-card"><div class="val">零开发</div><div class="lab">游戏方无需写一行代码</div></div>
+    <div class="stat-card"><div class="val">完整托管</div><div class="lab">认证 + 专区全由 WeGame 承担</div></div>
+    <div class="stat-card"><div class="val">无需对接接口</div><div class="lab">游戏方不需要接入任何接口</div></div>
+  </div>
+
+  <div class="sub-label">接入旅程（5 步）</div>
+  <div class="journey" style="padding:10px 0 24px">
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-body">
+        <div class="journey-title">① 沟通对齐</div>
+        <div class="journey-desc">与游戏项目组拉会，介绍高校专区能力，确认接入意向和认证模式</div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-body">
+        <div class="journey-title">② 内容收集</div>
+        <div class="journey-desc">按收集表模板，确认游戏内的任务内容、奖励配置、前置条件等信息</div>
+        <div style="margin-top:8px"><a href="https://doc.weixin.qq.com/sheet/e3_AdAAFAb7APcCN14JtbKkSSVa300Xe?scode=AJEAIQdfAAoP6JiIM6AdAAFAb7APc&tab=BB08J2" target="_blank" class="link-btn">📊 内容收集表 →</a></div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-body">
+        <div class="journey-title">③ 美术设计</div>
+        <div class="journey-desc">方案 A：由我们出设计稿<br>方案 B：游戏项目组或外包厂商出稿</div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-body">
+        <div class="journey-title">④ 素材配置</div>
+        <div class="journey-desc">项目组提供奖励素材（礼包码、CDKey 等），上传至配置后台</div>
+        <div style="margin-top:4px;font-size:12px;color:var(--t3)">跟进人：richiepu</div>
+        <div style="margin-top:6px"><a href="https://s.wegame.woa.com/#/permission/apply" target="_blank" class="link-btn">🔧 配置后台 →</a></div>
+      </div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-dot"></div>
+      <div class="journey-body">
+        <div class="journey-title">⑤ 开发测试上线</div>
+        <div class="journey-desc"><strong style="color:var(--t1)">全部由 WeGame 负责</strong><br>前端开发 + 后端开发 + 测试验收 + 上线发布</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 8. 定制专区接入 ==================== -->
+<section class="doc-section" id="custom-onboard">
+  <div class="section-eyebrow">Onboarding · Custom</div>
+  <h2>定制专区接入流程</h2>
+  <p class="desc">面向头部游戏。认证能力复用统一流程，其他功能模块按游戏需求独立定制开发。</p>
+
+  <table class="doc-table" style="margin-bottom:28px">
+    <thead><tr><th style="width:16%">模块</th><th style="width:24%">方案</th><th style="width:36%">说明</th><th style="width:24%">参考</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>🔐 <strong style="color:var(--t1)">认证能力</strong></td>
+        <td style="color:var(--t1);font-weight:600">与通用模板完全一致</td>
+        <td>复用同一套 QQ 钱包认证组件 + 微信认证小程序，无需另外开发</td>
+        <td>详见「认证能力接入」章节</td>
+      </tr>
+      <tr>
+        <td>⚙️ <strong style="color:var(--t1)">其他功能</strong></td>
+        <td style="color:var(--acc);font-weight:600">按需定制开发</td>
+        <td>认证之外的功能（如排行榜、任务系统、社区等）走正常新功能开发流程，每个游戏独立定制</td>
+        <td>根据游戏需求单独立项</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sub-label">定制开发流程</div>
+  <div class="journey" style="padding:10px 0 24px;margin-bottom:28px">
+    <div class="journey-step"><div class="journey-dot"></div><div class="journey-body"><div class="journey-title">需求沟通</div><div class="journey-desc">与游戏方明确定制需求，确定功能范围和优先级</div></div></div>
+    <div class="journey-step"><div class="journey-dot"></div><div class="journey-body"><div class="journey-title">方案设计</div><div class="journey-desc">输出产品方案文档 + 设计稿（交互 + 视觉）</div></div></div>
+    <div class="journey-step"><div class="journey-dot"></div><div class="journey-body"><div class="journey-title">开发实现</div><div class="journey-desc">前端 + 后端独立开发，按里程碑推进</div></div></div>
+    <div class="journey-step"><div class="journey-dot"></div><div class="journey-body"><div class="journey-title">联调测试</div><div class="journey-desc">与游戏方联调，完成功能验收和 Bug 修复</div></div></div>
+    <div class="journey-step"><div class="journey-dot"></div><div class="journey-body"><div class="journey-title">发布上线</div><div class="journey-desc">灰度 → 全量发布，运营持续跟进数据</div></div></div>
+  </div>
+
+  <div class="sub-label">已上线的定制专区（4 款）</div>
+  <div class="game-grid">
+    <div class="game-card"><div class="icon">🔫</div><div class="name">三角洲行动</div><div class="sub">每日好礼 · 社区 · QQ加群</div></div>
+    <div class="game-card"><div class="icon">👑</div><div class="name">洛克王国</div><div class="sub">高校特权 · 同校小伙伴</div></div>
+    <div class="game-card"><div class="icon">⚔️</div><div class="name">无畏契约</div><div class="sub">任务升级 · 段位排行</div></div>
+    <div class="game-card"><div class="icon">💥</div><div class="name">穿越火线</div><div class="sub">火线社排名 · 每周任务</div></div>
+  </div>
+</section>
+
+<!-- ==================== 9. 资源与文档清单 ==================== -->
+<section class="doc-section" id="resources">
+  <div class="section-eyebrow">Resources</div>
+  <h2>资源与文档清单</h2>
+  <p class="desc">所有相关链接集中整理，方便快速查找。权限申请方式：beacon 看板和 rainbow 配置页面在申请时会自动显示审批人，其余需单独联系的已在下方标注。</p>
+
+  <!-- 需求文档 -->
+  <div class="sub-label">需求文档</div>
+  <table class="doc-table" style="margin-bottom:28px">
+    <thead><tr><th style="width:30%">文档</th><th style="width:14%">平台</th><th style="width:56%">链接</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;color:var(--t1)">平台高校专区一期需求</td><td><span class="tag tag-dim">TAPD</span></td><td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181126380931" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">平台高校专区二期需求</td><td><span class="tag tag-dim">TAPD</span></td><td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181128147860" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">通用模板需求文档</td><td><span class="tag tag-dim">企微文档</span></td><td><a href="https://doc.weixin.qq.com/doc/w3_AdAAFAb7APcCNWtOiEQweQgepGXVO?scode=AJEAIQdfAAovoRUaAIAdAAFAb7APc" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">解绑与换绑需求</td><td><span class="tag tag-dim">TAPD</span></td><td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181131631656" target="_blank" class="link-btn">打开 →</a></td></tr>
+    </tbody>
+  </table>
+
+  <!-- 设计稿 -->
+  <div class="sub-label">设计稿（Figma）</div>
+  <table class="doc-table" style="margin-bottom:28px">
+    <thead><tr><th style="width:30%">设计稿</th><th style="width:14%">权限</th><th style="width:56%">链接</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;color:var(--t1)">平台高校专区</td><td>找 <strong>lamchen</strong></td><td><a href="https://www.figma.com/design/rob9TEszXpWR63SCXedQFj/2024-WeGame-%E6%95%B4%E4%BD%93%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5?node-id=22268-33481&t=KF9oUaHIg04j7OCJ-1" target="_blank" class="link-btn">Figma →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">通用模板</td><td>—</td><td><a href="https://www.figma.com/design/RRNGC0g4yZwdzPVEKiqokI/" target="_blank" class="link-btn">Figma →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">三角洲行动高校</td><td>—</td><td><a href="https://www.figma.com/design/RZTgNWTYHHmwmm58zZtQKW/%E4%B8%89%E8%A7%92%E6%B4%B2%E4%B8%93%E5%8C%BA?node-id=4549-36305&t=Oh17uTg6cPyEqiEK-1" target="_blank" class="link-btn">Figma →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">洛克王国高校</td><td>—</td><td><a href="https://www.figma.com/design/Cm6rkY5RwIBxG0kOCeK2mF/%E6%B4%9B%E5%85%8B%E7%8E%8B%E5%9B%BD%EF%BC%88%E8%A7%86%E8%A7%89%EF%BC%89?node-id=1408-26458&t=8f5aAP7UgUnoUCMO-1" target="_blank" class="link-btn">Figma →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">无畏契约高校</td><td>—</td><td><a href="https://www.figma.com/design/v6qcsHRItJEt22IiGmrrfJ/2024--2025%E6%97%A0%E7%95%8F%E5%A5%91%E7%BA%A6%E5%8A%A9%E6%89%8B%E5%8A%9F%E8%83%BD?node-id=1895-3973&t=MA01lQHv6Cce9qVI-1" target="_blank" class="link-btn">Figma →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">穿越火线高校</td><td>—</td><td><a href="https://www.figma.com/design/Sp55G9H5yMC01quwa7msJq/cf%E4%B8%93%E5%8C%BA%EF%BC%88%E8%BF%87%E7%A8%8B%E7%A8%BF%E9%9B%86%E5%90%88%EF%BC%89?node-id=2216-249984&t=GYLYZl6tJetcZblp-1" target="_blank" class="link-btn">Figma →</a></td></tr>
+    </tbody>
+  </table>
+
+  <!-- 数据看板 -->
+  <div class="sub-label">数据看板</div>
+  <table class="doc-table" style="margin-bottom:28px">
+    <thead><tr><th style="width:30%">看板</th><th style="width:14%">平台</th><th style="width:56%">链接</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;color:var(--t1)">高校认证基础数据</td><td><span class="tag tag-dim">小马</span></td><td><a href="https://xiaoma.woa.com/v5/#/reviews/7360?chatai=%2Fcommon%2Fjs%2Fwrap%2Fchat" target="_blank" class="link-btn">打开 →</a> <span style="font-size:12px;color:var(--t3);margin-left:6px">权限找 jinbozheng</span></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">高校助手页数据</td><td><span class="tag tag-dim">Beacon</span></td><td><a href="https://beacon.woa.com/datainsight/wegameweb/Panel_Show/112005" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">平台高校数据</td><td><span class="tag tag-dim">Beacon</span></td><td><a href="https://beacon.woa.com/datainsight/wegameweb/Panel_Show/113093" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">暗区突围高校数据</td><td><span class="tag tag-dim">Beacon</span></td><td><a href="https://beacon.woa.com/datainsight/wegameweb/Panel_Show/111064" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">三角洲行动高校数据</td><td><span class="tag tag-dim">Beacon</span></td><td><a href="https://beacon.woa.com/datainsight/wegameweb/Panel_Show/108306" target="_blank" class="link-btn">打开 →</a></td></tr>
+    </tbody>
+  </table>
+
+  <!-- 配置后台 & 运营工具 -->
+  <div class="sub-label">配置后台 &amp; 运营工具</div>
+  <table class="doc-table" style="margin-bottom:28px">
+    <thead><tr><th style="width:30%">后台 / 工具</th><th style="width:14%">类型</th><th style="width:56%">链接</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;color:var(--t1)">通用模板素材配置后台</td><td><span class="tag tag-dim">s.wegame</span></td><td><a href="https://s.wegame.woa.com/#/permission/apply" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">高校社区 / 话题内容管理端</td><td><span class="tag tag-dim">运营后台</span></td><td><a href="https://developer.wegame.com/platform/oss/index.html#/feeds/hotdynamic" target="_blank" class="link-btn">打开 →</a> <span style="font-size:12px;color:var(--t3);margin-left:6px">权限找 jamesleeli</span></td></tr>
+      <tr>
+        <td style="font-weight:600;color:var(--t1)">定制专区 Rainbow 配置</td>
+        <td><span class="tag tag-dim">Rainbow</span></td>
+        <td style="line-height:2.2">
+          <a href="https://rainbow.woa.com/console/schema/v1_rb5_8cb47e3c-9d2c-4324-ad5a-c04c3/Default/4504/1/data/edit?group_name=wegame%20%E5%B9%B3%E5%8F%B0%E9%AB%98%E6%A0%A1" target="_blank" class="link-btn">平台高校走马灯轮播 →</a>
+          <a href="https://rainbow.woa.com/console/schema/v1_rb5_ab18b6c7-1470-4b7d-8c37-1b2aa/Default/4621/data/list" target="_blank" class="link-btn">终极角逐特权枪皮 →</a>
+          <a href="https://rainbow.woa.com/console/schema/v1_rb5_263cf70f-87e8-4065-9159-6463a/Default/schema/list?listType=PRIVATE" target="_blank" class="link-btn">穿越火线高校 →</a>
+        </td>
+      </tr>
+      <tr><td style="font-weight:600;color:var(--t1)">平台高校特权展示资源位说明</td><td><span class="tag tag-dim">对外运营文档</span></td><td><a href="https://doc.weixin.qq.com/doc/w3_AdAAFAb7APcCNmgT0oIl1RWmmteFc?scode=AJEAIQdfAAoTCTcJyNAdAAFAb7APc" target="_blank" class="link-btn">打开 →</a></td></tr>
+    </tbody>
+  </table>
+
+  <!-- 技术文档 -->
+  <div class="sub-label">技术文档</div>
+  <table class="doc-table">
+    <thead><tr><th style="width:30%">文档</th><th style="width:14%">平台</th><th style="width:56%">链接</th></tr></thead>
+    <tbody>
+      <tr><td style="font-weight:600;color:var(--t1)">认证查询接口文档</td><td><span class="tag tag-dim">iwiki</span></td><td><a href="https://iwiki.woa.com/p/4014099263" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">认证流程 Wiki</td><td><span class="tag tag-dim">iwiki</span></td><td><a href="https://iwiki.woa.com/p/4015821543" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">QQ 钱包组件申请表</td><td><span class="tag tag-dim">企微表格</span></td><td><a href="https://doc.weixin.qq.com/sheet/e3_ALgATgYCACoFnh1fk2wT70CByND1c?scode=AJEAIQdfAAoqFSyfuoAdAAFAb7APc&tab=BB08J2" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">QQ 钱包组件介绍文档</td><td><span class="tag tag-dim">企微文档</span></td><td><a href="https://doc.weixin.qq.com/doc/w3_AXwAFAblAAwCN9RqEwRBtTnef0u9s?scode=AJEAIQdfAAoP6JiIM6AdAAFAb7APc" target="_blank" class="link-btn">打开 →</a></td></tr>
+      <tr><td style="font-weight:600;color:var(--t1)">内容收集表</td><td><span class="tag tag-dim">企微表格</span></td><td><a href="https://doc.weixin.qq.com/sheet/e3_AdAAFAb7APcCN14JtbKkSSVa300Xe?scode=AJEAIQdfAAoP6JiIM6AdAAFAb7APc&tab=BB08J2" target="_blank" class="link-btn">打开 →</a></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 10. Roadmap ==================== -->
+<section class="doc-section" id="roadmap">
+  <div class="section-eyebrow">Roadmap</div>
+  <h2>交接内容进度</h2>
+  <p class="desc">交接文档的完成情况一览，逐项确认确保无遗漏。</p>
+
+  <div class="card" style="margin-bottom:28px;padding:20px 24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <span style="font-size:16px;font-weight:600">整体完成度</span>
+      <span style="font-size:24px;font-weight:700;color:var(--acc)">100%</span>
+    </div>
+    <div class="progress-track" style="height:8px">
+      <div class="progress-fill" style="width:100%"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--t3)">
+      <span>7 / 7 项已完成</span>
+      <span>🎉 全部完成</span>
+    </div>
+  </div>
+
+  <table class="doc-table">
+    <thead><tr><th style="width:5%">#</th><th style="width:18%">模块</th><th style="width:35%">交接内容</th><th style="width:26%">进度</th><th style="width:16%">状态</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--t3);font-weight:700">01</td>
+        <td style="color:var(--t1);font-weight:600">产品体系架构</td>
+        <td>两大业务板块、产品载体、认证体系全貌</td>
+        <td><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></td>
+        <td><span style="color:var(--acc);font-weight:700;font-size:13px">● 已完成</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--t3);font-weight:700">02</td>
+        <td style="color:var(--t1);font-weight:600">认证接口依赖</td>
+        <td>三种接入模式、认证查询接口、数据过期风险</td>
+        <td><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></td>
+        <td><span style="color:var(--acc);font-weight:700;font-size:13px">● 已完成</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--t3);font-weight:700">03</td>
+        <td style="color:var(--t1);font-weight:600">专区功能内容</td>
+        <td>平台专区 + 单游戏专区的具体功能模块说明</td>
+        <td><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></td>
+        <td><span style="color:var(--acc);font-weight:700;font-size:13px">● 已完成</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--t3);font-weight:700">04</td>
+        <td style="color:var(--t1);font-weight:600">接入指南</td>
+        <td>认证能力接入 + 通用模板接入 + 定制专区接入的完整流程</td>
+        <td><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></td>
+        <td><span style="color:var(--acc);font-weight:700;font-size:13px">● 已完成</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--t3);font-weight:700">05</td>
+        <td style="color:var(--t1);font-weight:600">协作与联系人</td>
+        <td>5 个协作部门的职责边界和关键对接人</td>
+        <td><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></td>
+        <td><span style="color:var(--acc);font-weight:700;font-size:13px">● 已完成</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--t3);font-weight:700">06</td>
+        <td style="color:var(--t1);font-weight:600">资源与文档清单</td>
+        <td>需求文档、设计稿、数据看板、配置后台、技术文档汇总</td>
+        <td><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></td>
+        <td><span style="color:var(--acc);font-weight:700;font-size:13px">● 已完成</span></td>
+      </tr>
+      <tr>
+        <td style="color:var(--t3);font-weight:700">07</td>
+        <td style="color:var(--t1);font-weight:600">FAQ 与待办事项</td>
+        <td>待推进需求看板、遗留问题、踩坑备忘、FAQ</td>
+        <td><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></td>
+        <td><span style="color:var(--acc);font-weight:700;font-size:13px">● 已完成</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 11. FAQ 与待办事项 ==================== -->
+<section class="doc-section" id="faq">
+  <div class="section-eyebrow">FAQ &amp; Backlog</div>
+  <h2>FAQ 与待办事项</h2>
+  <p class="desc">遗留需求、已知风险、踩坑记录和高频问题，帮助接手人快速了解当前状态和后续方向。</p>
+
+  <!-- 待推进需求看板 -->
+  <div class="sub-label">待推进需求看板</div>
+  <p style="font-size:14px;color:var(--t3);margin-bottom:12px">截至 2026.03，以下需求尚未完成。按状态分组排列，点击链接可跳转 TAPD 原始单。</p>
+
+  <div class="callout" style="margin-bottom:20px">
+    <strong>⚡ 状态说明</strong><br>
+    <span style="color:#e07a2f;font-weight:600">● 开发中</span> — 正在编码&emsp;
+    <span style="color:#d44;font-weight:600">● 测试阻塞</span> — 等待游戏方配合&emsp;
+    <span style="color:var(--t3);font-weight:600">○ 待排期</span> — 需求已评审未排期&emsp;
+    <span style="color:#999;font-weight:600">◌ 未启动</span> — 尚未进入流程
+  </div>
+
+  <table class="doc-table" style="margin-bottom:28px">
+    <thead>
+      <tr>
+        <th style="width:10%">板块</th>
+        <th style="width:32%">需求</th>
+        <th style="width:11%">状态</th>
+        <th style="width:22%">负责开发</th>
+        <th style="width:25%">项目接口人</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 开发中 -->
+      <tr style="background:rgba(224,122,47,.04)">
+        <td style="font-weight:600;color:var(--t1)">VAL</td>
+        <td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181130072504" target="_blank" class="link-btn" style="display:inline">VAL 高校专区票据失效问题修复 →</a></td>
+        <td><span style="color:#e07a2f;font-weight:600;font-size:13px">● 开发中</span></td>
+        <td>zackhe</td>
+        <td>—</td>
+      </tr>
+      <tr style="background:rgba(224,122,47,.04)">
+        <td style="font-weight:600;color:var(--t1)">VAL</td>
+        <td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181130068081" target="_blank" class="link-btn" style="display:inline">VAL 高光时刻榜单 →</a></td>
+        <td><span style="color:#e07a2f;font-weight:600;font-size:13px">● 开发中</span></td>
+        <td>zackhe、钦臣</td>
+        <td>markgqzhang</td>
+      </tr>
+      <!-- 测试阻塞 -->
+      <tr style="background:rgba(221,68,68,.04)">
+        <td style="font-weight:600;color:var(--t1)">暗区突围</td>
+        <td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181129393710" target="_blank" class="link-btn" style="display:inline">暗区突围高校任务模块 →</a></td>
+        <td><span style="color:#d44;font-weight:600;font-size:13px">● 测试阻塞</span></td>
+        <td>alexnhqin</td>
+        <td>markqchen<br><span style="font-size:12px;color:var(--t3)">阻塞原因：项目侧接口返回异常，需游戏方排查</span></td>
+      </tr>
+      <!-- 待排期 -->
+      <tr>
+        <td style="font-weight:600;color:var(--t1)">平台高校</td>
+        <td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181131631656" target="_blank" class="link-btn" style="display:inline">高校认证解绑与换绑功能 →</a></td>
+        <td><span style="color:var(--t3);font-weight:600;font-size:13px">○ 待排期</span></td>
+        <td>alexnhqin、skywli、laytonmo</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;color:var(--t1)">平台高校</td>
+        <td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181131619005" target="_blank" class="link-btn" style="display:inline">学生及官方活动定向分发与配置系统 →</a></td>
+        <td><span style="color:var(--t3);font-weight:600;font-size:13px">○ 待排期</span></td>
+        <td>—</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;color:var(--t1)">平台高校</td>
+        <td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181130072691" target="_blank" class="link-btn" style="display:inline">既往服务适配 2.0 →</a></td>
+        <td><span style="color:var(--t3);font-weight:600;font-size:13px">○ 待排期</span></td>
+        <td>alexnhqin</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;color:var(--t1)">洛克王国</td>
+        <td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181132740611" target="_blank" class="link-btn" style="display:inline">洛克王国高校专区二期 →</a></td>
+        <td><span style="color:var(--t3);font-weight:600;font-size:13px">○ 待排期</span></td>
+        <td>alexnhqin、jinbozheng、钦臣</td>
+        <td>内部找 hosizhu</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;color:var(--t1)">VAL</td>
+        <td>赛事通知卡片<span style="font-size:12px;color:var(--t3);margin-left:6px">（TAPD 单待建）</span></td>
+        <td><span style="color:var(--t3);font-weight:600;font-size:13px">○ 待排期</span></td>
+        <td>—</td>
+        <td>markgqzhang</td>
+      </tr>
+      <!-- 未启动 -->
+      <tr style="background:rgba(0,0,0,.015)">
+        <td style="font-weight:600;color:var(--t1)">卡赞</td>
+        <td><a href="https://tapd.woa.com/tapd_fe/10041181/story/detail/1010041181132765125" target="_blank" class="link-btn" style="display:inline">地下城与勇士：卡赞 高校认证接入 →</a></td>
+        <td><span style="color:#999;font-weight:600;font-size:13px">◌ 未启动</span></td>
+        <td>alexnhqin</td>
+        <td>内部找 javenwei</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 新游戏接入线索 -->
+  <div class="callout" style="margin-bottom:28px">
+    <strong>🎮 新游戏接入线索</strong><br>
+    <strong>王者荣耀：世界</strong> — 接入事宜由内部运营同学推进中，对接人找 <strong>wintersun</strong>。
+  </div>
+
+  <!-- 已知遗留问题 -->
+  <div class="sub-label">已知遗留问题</div>
+  <table class="doc-table" style="margin-bottom:28px">
+    <thead><tr><th style="width:5%">#</th><th style="width:28%">问题</th><th style="width:67%">说明</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;color:var(--t3)">1</td>
+        <td style="font-weight:600;color:var(--t1)">认证数据过期风险</td>
+        <td>用户毕业后认证状态不会自动失效，需依赖「解绑/换绑」需求上线解决（目前待排期）。</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--t3)">2</td>
+        <td style="font-weight:600;color:var(--t1)">QQ 游戏中心双向互通</td>
+        <td>WeGame 与 QQ 游戏中心已互相提供接口文档，但双方均未开始开发。</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--t3)">3</td>
+        <td style="font-weight:600;color:var(--t1)">实名匹配数据未互通</td>
+        <td>三角洲行动 / 无畏契约 / 穿越火线的实名认证数据与平台认证不互通，限制了跨游戏认证打通。</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--t3)">4</td>
+        <td style="font-weight:600;color:var(--t1)">逆战双向互通未上线</td>
+        <td>逆战高校与平台高校的双向认证互通功能尚未完成上线。</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;color:var(--t3)">5</td>
+        <td style="font-weight:600;color:var(--t1)">既往服务适配 2.0</td>
+        <td>需对历史存量用户做认证兼容处理，涉及 7+ 款游戏：三角洲行动、和平精英（历史访问用户兼容）、星痕共鸣/矩阵·零日危机/三国杀/永恒轮回（仅限平台认证用户）、暗区突围（3.27 上线，历史游玩用户兼容）。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 踩坑备忘 -->
+  <div class="sub-label">踩坑备忘</div>
+  <div class="callout" style="margin-bottom:28px">
+    <strong>🔧 三种认证模式是被迫分化的</strong><br>
+    「完整托管 / 双向互通 / 单向输入」三种接入模式并非主动架构设计，而是受限于各游戏方数据互通能力差异——有的游戏方能双向同步认证数据，有的只能单向读取，有的完全不具备数据通道。接手时需理解：<strong>这不是过度设计，而是现实约束。</strong>
+  </div>
+
+  <!-- FAQ -->
+  <div class="sub-label">常见问题 FAQ</div>
+  <table class="doc-table">
+    <thead><tr><th style="width:35%">问题</th><th style="width:65%">解答</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:600;color:var(--t1)">新游戏要接入高校，第一步找谁？</td>
+        <td>先找<strong>运营同学</strong>沟通接入意向和模式，运营确认后会协助拉你进对接流程。具体接入步骤参考本文档「认证能力接入」「通用模板接入」「定制专区接入」三个章节。</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600;color:var(--t1)">出了认证 bug 找谁？</td>
+        <td>第一步找 <strong>alexnhqin</strong> 确认是否为内部问题；排除内部问题后，再根据情况找外部（项目组或 QQ 钱包侧 dongqiyang）。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</div>
+</div>
+
+<!-- Scroll spy for nav -->
+<script>
+const navLinks = document.querySelectorAll('.doc-nav a');
+const sections = document.querySelectorAll('.doc-section');
+
+function updateNav() {
+  let current = '';
+  sections.forEach(s => {
+    const top = s.getBoundingClientRect().top;
+    if (top < 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+
+document.querySelector('.doc-body').addEventListener('scroll', updateNav);
+window.addEventListener('scroll', updateNav);
+updateNav();
+</script>
+</body>
+</html>
